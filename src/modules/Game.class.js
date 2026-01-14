@@ -223,6 +223,12 @@ class Game {
         cellIndex < this.state[rowIndex].length;
         cellIndex++
       ) {
+        if (this.state[rowIndex][cellIndex] === 2048) {
+          this.status = 'win';
+
+          return this.status;
+        }
+
         if (this.state[rowIndex][cellIndex] === 0) {
           this.status = 'playing';
 
@@ -248,12 +254,6 @@ class Game {
 
           return this.status;
         }
-
-        if (this.state[rowIndex][cellIndex] === 2048) {
-          this.status = 'win';
-
-          return this.status;
-        }
       }
     }
     this.status = 'lose';
@@ -266,9 +266,8 @@ class Game {
    */
   start() {
     this.status = 'playing';
-
     this.generateValue(2);
-    this.score += this.getScore();
+    // this.score += this.getScore();
   }
 
   /**
@@ -300,7 +299,7 @@ class Game {
   getEmtyCells() {
     const available = [];
 
-    this.state.forEach((row, rowIndex) => {
+    Array.from(this.state).forEach((row, rowIndex) => {
       row.forEach((cell, cellIndex) => {
         if (this.state[rowIndex][cellIndex] === 0) {
           available.push([rowIndex, cellIndex]);

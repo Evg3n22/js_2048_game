@@ -7,7 +7,7 @@ const Game = require('../modules/Game.class');
 const board = document.querySelector('.game-field');
 
 const matrix = Array.from(board.rows).map((row) => {
-  Array.from(row.cells).map((cell) => {
+  return Array.from(row.cells).map((cell) => {
     cell.setAttribute('value', 0);
 
     return cell;
@@ -15,7 +15,7 @@ const matrix = Array.from(board.rows).map((row) => {
 });
 
 let valueMatrix = Array.from(board.rows).map((row) => {
-  Array.from(row.cells).map((cell) => {
+  return Array.from(row.cells).map((cell) => {
     return Number(cell.getAttribute('value'));
   });
 });
