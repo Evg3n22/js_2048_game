@@ -1,11 +1,11 @@
 {
+  "homepage": "/js_2048_game",
   "name": "2048",
   "version": "1.0.0",
   "description": "2048 game",
   "keywords": [],
   "author": "Mate Academy",
   "license": "GPL-3.0",
-  "homepage": "js_2048_game",
   "scripts": {
     "init": "mate-scripts init",
     "start": "mate-scripts start",
