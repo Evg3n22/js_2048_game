@@ -39,8 +39,13 @@ export default class Game {
   }
 
   moveLeft() {
+    const oldMatrix = [];
+    let moved = false;
+
     // Delete all 0's
     this.state.forEach((row, rowIndex) => {
+      oldMatrix.push([...row]);
+
       this.state[rowIndex] = Array.from(this.state[rowIndex]).filter((cell) => {
         return cell !== 0;
       });
@@ -64,16 +69,27 @@ export default class Game {
       while (row.length < 4) {
         this.state[rowIndex].push(0);
       }
+
+      if (!this.arraysEqual(row, oldMatrix[rowIndex])) {
+        moved = true;
+      }
     });
 
-    this.generateValue(1);
+    if (moved) {
+      this.generateValue(1);
+    }
 
     this.score = this.getScore();
   }
 
   moveRight() {
+    const oldMatrix = [];
+    let moved = false;
+
     // Delete all 0's
     this.state.forEach((row, rowIndex) => {
+      oldMatrix.push([...row]);
+
       this.state[rowIndex] = Array.from(this.state[rowIndex]).filter((cell) => {
         return cell !== 0;
       });
@@ -97,19 +113,29 @@ export default class Game {
       while (row.length < 4) {
         this.state[rowIndex].unshift(0);
       }
+
+      if (!this.arraysEqual(row, oldMatrix[rowIndex])) {
+        moved = true;
+      }
     });
 
-    this.generateValue(1);
+    if (moved) {
+      this.generateValue(1);
+    }
 
     this.score = this.getScore();
   }
 
   moveUp() {
+    let moved = false;
+
     this.state.forEach((row, rowIndex) => {
+      const oldCol = [];
       let col = [];
 
       row.forEach((cell, cellIndex) => {
         col.push(this.state[cellIndex][rowIndex]);
+        oldCol.push(this.state[cellIndex][rowIndex]);
       });
 
       // Delete all zero's
@@ -136,19 +162,29 @@ export default class Game {
       row.forEach((cell, cellIndex) => {
         this.state[cellIndex][rowIndex] = col[cellIndex];
       });
+
+      if (!this.arraysEqual(col, oldCol)) {
+        moved = true;
+      }
     });
 
-    this.generateValue(1);
+    if (moved) {
+      this.generateValue(1);
+    }
 
     this.score = this.getScore();
   }
 
   moveDown() {
+    let moved = false;
+
     this.state.forEach((row, rowIndex) => {
+      const oldCol = [];
       let col = [];
 
       row.forEach((cell, cellIndex) => {
         col.push(this.state[cellIndex][rowIndex]);
+        oldCol.push(this.state[cellIndex][rowIndex]);
       });
 
       // Delete all zero's
@@ -175,9 +211,15 @@ export default class Game {
       row.forEach((cell, cellIndex) => {
         this.state[cellIndex][rowIndex] = col[cellIndex];
       });
+
+      if (!this.arraysEqual(col, oldCol)) {
+        moved = true;
+      }
     });
 
-    this.generateValue(1);
+    if (moved) {
+      this.generateValue(1);
+    }
 
     this.score = this.getScore();
   }
@@ -327,6 +369,18 @@ export default class Game {
 
       this.state[r][c] = Math.random() <= 0.1 ? 4 : 2;
     }
+  }
+
+  arraysEqual(arr1, arr2) {
+    // First, check if the lengths are the same
+    if (arr1.length !== arr2.length) {
+      return false;
+    }
+
+    // Then, check if every element at the same index is equal
+    return arr1.every((element, index) => {
+      return element === arr2[index];
+    });
   }
 }
 // module.exports = Game;
